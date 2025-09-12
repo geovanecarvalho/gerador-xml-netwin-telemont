@@ -229,7 +229,7 @@ def main():
     print(f"Colunas disponíveis: {list(df.columns)}")
     
     # Criar diretório principal
-    diretorio_principal = 'moradias_xml'
+    diretorio_principal = 'moradias_xml_'+ df['ESTACAO_ABASTECEDORA'].iloc[0]+ "_" + datetime.now().strftime('%Y%m%d%H%M%S')
     os.makedirs(diretorio_principal, exist_ok=True)
     
     # Lista para armazenar caminhos das pastas
