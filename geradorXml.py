@@ -189,10 +189,10 @@ def criar_xml_edificio(dados_csv, numero_pasta):
     ucs_residenciais = int(dados_csv['UCS_RESIDENCIAIS']) if 'UCS_RESIDENCIAIS' in dados_csv and not pd.isna(dados_csv['UCS_RESIDENCIAIS']) else 0
     ucs_comerciais = int(dados_csv['UCS_COMERCIAIS']) if 'UCS_COMERCIAIS' in dados_csv and not pd.isna(dados_csv['UCS_COMERCIAIS']) else 0
     destinacao = determinar_destinacao(ucs_residenciais, ucs_comerciais)
-    ET.SubElement(edificio, 'destinacao').text = destinacao
-    
     # Número de pisos
     ET.SubElement(edificio, 'numPisos').text = '1'
+    
+    ET.SubElement(edificio, 'destinacao').text = destinacao
     
     # Criar o XML
     xml_str = ET.tostring(edificio, encoding='UTF-8', method='xml')
@@ -290,6 +290,7 @@ def main():
     
     print(f'\n✅ Arquivo ZIP criado: {zip_filename}')
     print(f'✅ Total de {len(df)} pastas e arquivos XML criados.')
+    input("Pressione Enter para sair...")
 
 if __name__ == '__main__':
     main()
