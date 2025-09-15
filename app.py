@@ -176,20 +176,17 @@ def criar_xml_edificio(dados_csv, numero_pasta):
     # DETERMINAR OCUPAÇÃO COM BASE NO RESULTADO
     resultado = str(dados_csv['RESULTADO']).strip().upper() if 'RESULTADO' in dados_csv and not pd.isna(dados_csv['RESULTADO']) else ''
     
-    
+    # OCUPAÇÃO FIXA (não muda)
     ET.SubElement(edificio, 'ocupacao').text = "EDIFICACAOCOMPLETA"
+    
+    # DESTINAÇÃO baseada no RESULTADO
     if resultado.startswith('CA') or resultado.startswith('AP'):
-        destinacao_complemento = 'RESIDENCIA'
+        destinacao = 'COMERCIO'
     else:
-        destinacao_complemento = 'COMERCIO'
+        destinacao = 'RESIDENCIA'
     
-    #ucs_residenciais = int(dados_csv['UCS_RESIDENCIAIS']) if 'UCS_RESIDENCIAIS' in dados_csv and not pd.isna(dados_csv['UCS_RESIDENCIAIS']) else 0
-    #ucs_comerciais = int(dados_csv['UCS_COMERCIAIS']) if 'UCS_COMERCIAIS' in dados_csv and not pd.isna(dados_csv['UCS_COMERCIAIS']) else 0
-    #destinacao = determinar_destinacao(ucs_residenciais, ucs_comerciais)
-    
-
     ET.SubElement(edificio, 'numPisos').text = '1'
-    ET.SubElement(edificio, 'destinacao').text = destinacao_complemento
+    ET.SubElement(edificio, 'destinacao').text = destinacao
     
     xml_str = ET.tostring(edificio, encoding='UTF-8', method='xml')
     xml_completo = b'<?xml version="1.0" encoding="UTF-8"?>' + xml_str
